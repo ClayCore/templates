@@ -1,0 +1,13 @@
+# Used for code coverage, remove/rename if you don't want that.
+coverage:
+    range: 70...90
+    round: down
+    precision: 2
+
+ignore:
+    - 'tests'
+    - '/assets'
+
+comment:
+    layout: diff, files
+    require_changes: yes

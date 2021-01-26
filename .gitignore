@@ -1,0 +1,11 @@
+*/deps/*
+!*/deps/README.txt
+build/
+bin/
+libs/
+node_modules/
+.cache/
+dist/
+target/
+Cargo.lock
+.vscode/

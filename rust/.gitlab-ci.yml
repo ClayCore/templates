@@ -1,0 +1,29 @@
+# Used for running coverage tests. Rename or remove file if unnecessary
+# NOTE(claymore): gitlab exclusive. adapt to travis or something else for github.
+default:
+    image: rust:latest
+
+run-tests:
+    stage: test
+    script:
+        - rustc --version && cargo --version
+        - apt-get update --yes
+        - apt-get install libelf-dev libdw-dev cmake binutils-dev libiberty-dev --yes
+    after_script:
+        - wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz
+        - tar xzf master.tar.gz
+        - cd kcov-master
+        - mkdir build
+        - cd build
+        - cmake ..
+        - make
+        - make install DESTDIR=../../kcov-build
+        - cd ../..
+        - rm -rf kcov-master
+        - ./kcov-build/usr/local/bin/kcov --version
+        - cargo test --no-run
+        - for file in target/debug/deps/game_engine-*[^\.d]; do mkdir -p "./target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "./target/cov/$(basename $file)" "$file"; done
+        - bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}
+
+stages:
+    - test

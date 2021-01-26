@@ -1,0 +1,3 @@
+This directory contains all the necessary dependencies for your project. If you wish to add any external/vendor libraries to your project, you should add them here and add a corresponding `Find#.cmake` file in the `cmake/` directory.
+
+Note that none of the template libraries, that are added to the build system, are available here. This is because of licensing and distribution of other libraries, and also because I do not wish to pollute this repository with a bunch of include files and .dlls.

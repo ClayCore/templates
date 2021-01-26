@@ -1,0 +1,41 @@
+[package]
+name = "template"
+version = "0.1.0"
+authors = ["lunarium | claycore <deltaware@cock.li>"]
+edition = "2018"
+
+# [lib]
+# name = "template_lib"
+# path = "src/lib.rs"
+
+[[bin]]
+name = "template_bin"
+path = "src/main.rs"
+
+[dependencies]
+# Error handling
+# Useful at all times
+anyhow = ">=1.0.34"
+thiserror = ">=1.0.22"
+
+# Serializing/Deserializing
+# Uncomment to add to deps
+# bincode = "^1.3.1"
+# serde = { version="~1.0.117", features = ["derive"] }
+
+# Logging
+# Comment out if unnecessary
+log = "^0.4.11"
+env_logger = "^0.8.2"
+test-env-log = "^0.2.2"
+chrono = "^0.4.19"
+
+# Configuration
+dotenv = "^0.15.0"
+
+# Color terminal output
+# Uncomment to add to deps
+colored = "2.0"
+
+# Global states
+lazy_static = "^1.4.0"
