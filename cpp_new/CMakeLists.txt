@@ -13,13 +13,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake CACHE PATH 
 include(cmake/BaseProject.cmake)
 include(cmake/PreventInSourceBuilds.cmake)
 
-# Add all the project options
-add_library(project_options INTERFACE)
-target_compile_features(project_options INTERFACE cxx_std_20)
-
-# Link this 'library' to use various warnings specified in CompilerWarnings.cmake
-add_library(project_warnings INTERFACE)
-
 # Add pretty colors
 if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     add_compile_options(-fcolor-diagnostics)
@@ -35,6 +28,13 @@ endif()
 include(cmake/Cache.cmake)
 
 # Standard compiler warnings
+# Add all the project options
+add_library(project_options INTERFACE)
+target_compile_features(project_options INTERFACE cxx_std_20)
+
+# Link this 'library' to use various warnings specified in CompilerWarnings.cmake
+add_library(project_warnings INTERFACE)
+
 include(cmake/CompilerWarnings.cmake)
 set_project_warnings(project_warnings)
 
@@ -137,8 +137,6 @@ add_executable(${ProjectName} ${SOURCES} ${HEADERS})
 message(STATUS "Headers: '${HEADERS}'")
 message(STATUS "Sources: '${SOURCES}'")
 message(STATUS "IncludeDirs: '${PROJECT_INCLUDE_DIRS}'")
-message(STATUS "Warnings: '${project_warnings}'")
-message(STATUS "Options: '${project_options}'")
 
 # Add all the include directories and libraries
 target_include_directories(
@@ -153,13 +151,13 @@ target_include_directories(
 
 target_link_libraries(
     ${ProjectName}
-    PUBLIC project_options 
-    project_warnings
+    INTERFACE project_options 
+    INTERFACE project_warnings
     ${OPENGL_LIBRARIES}
     ${GLAD_LIBRARIES}
     ${GLFW3_LIBRARIES}
     ${SDL2_LIBRARIES}
     sfml-audio sfml-network sfml-graphics sfml-window sfml-system
-    ${SOURCES}
     ${HEADERS} 
+    ${SOURCES}
 )
