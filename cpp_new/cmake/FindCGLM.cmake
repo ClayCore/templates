@@ -5,16 +5,14 @@ find_path(
     NAMES cglm/cglm.h
     HINTS
     PATHS ${CGLM_SEARCH_PATHS}
-    PATH_SUFFIXES include
-)
+    PATH_SUFFIXES include)
 
 find_library(
     CGLM_LIBRARIES
     NAMES cglm.lib
     HINTS
     PATHS ${CGLM_SEARCH_PATHS}
-    PATH_SUFFIXES lib
-)
+    PATH_SUFFIXES lib)
 
 set(CGLM_FOUND "NO")
 if(CGLM_HEADERS AND CGLM_LIBRARIES)

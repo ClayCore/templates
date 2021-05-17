@@ -5,8 +5,7 @@ find_path(
     NAMES glad/glad.h
     HINTS
     PATHS ${GLAD_SEARCH_PATHS}
-    PATH_SUFFIXES include
-)
+    PATH_SUFFIXES include)
 
 set(GLAD_FOUND "NO")
 if(GLAD_HEADERS)

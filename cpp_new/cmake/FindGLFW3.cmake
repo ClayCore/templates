@@ -5,17 +5,18 @@ find_path(
     NAMES GLFW/glfw3.h
     HINTS
     PATHS ${GLFW3_SEARCH_PATHS}
-    PATH_SUFFIXES include
-)
+    PATH_SUFFIXES include)
 
 # TODO: Separate out all the libraries.
 find_library(
     GLFW3_LIBRARIES
-    NAMES glfw3 libglfw3.a libglfw.a glfw
+    NAMES glfw3
+          libglfw3.a
+          libglfw.a
+          glfw
     HINTS
     PATHS ${GLFW3_SEARCH_PATHS}
-    PATH_SUFFIXES lib
-)
+    PATH_SUFFIXES lib)
 
 set(GLFW3_FOUND "NO")
 if(GLFW3_HEADERS AND GLFW3_LIBRARIES)

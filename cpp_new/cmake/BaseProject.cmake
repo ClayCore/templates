@@ -1,10 +1,18 @@
 # Set a default build type
-if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     message(STATUS "Setting build type to 'RelWithDebInfo' as none was specified.")
-    set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Choose type of build." FORCE)
-    
+    set(CMAKE_BUILD_TYPE
+        RelWithDebInfo
+        CACHE STRING "Choose type of build." FORCE)
+
     # Set values for the build type for cmake-gui
-    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+    set_property(
+        CACHE CMAKE_BUILD_TYPE
+        PROPERTY STRINGS
+                 "Debug"
+                 "Release"
+                 "MinSizeRel"
+                 "RelWithDebInfo")
 endif()
 
 # Generate compile_commands.json for clang-based tools and vscode
@@ -26,6 +34,3 @@ endif()
 # Output directories
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target)
-
-
-

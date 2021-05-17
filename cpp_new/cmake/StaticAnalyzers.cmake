@@ -5,14 +5,12 @@ option(ENABLE_INCLUDE_WHAT_YOU_USE "Enable static analysis with incldue what you
 if(ENABLE_CPPCHECK)
     find_program(CPPCHECK cppcheck)
     if(CPPCHECK)
-        set(
-            CMAKE_CXX_CPPCHECK
+        set(CMAKE_CXX_CPPCHECK
             ${CPPCHECK}
             --suppress=missingInclude
             --enable=all
             --inline-suppr
-            --inconclusive
-        )
+            --inconclusive)
     else()
         message(SEND_ERROR "cppcheck requested but executable not found")
     endif()

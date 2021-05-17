@@ -1,8 +1,7 @@
 function(set_project_warnings project_name)
     option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" TRUE)
 
-    set(
-        MSVC_WARNINGS
+    set(MSVC_WARNINGS
         /W4
         /w14242
         /w14254
@@ -23,11 +22,9 @@ function(set_project_warnings project_name)
         /w14905
         /w14906
         /w14928
-        /permissive-
-    )
+        /permissive-)
 
-    set(
-        CLANG_WARNINGS
+    set(CLANG_WARNINGS
         -Wall
         -Wextra
         -Wshadow
@@ -41,23 +38,20 @@ function(set_project_warnings project_name)
         -Wsign-conversion
         -Wnull-dereference
         -Wdouble-promotion
-        -Wformat=2
-    )
+        -Wformat=2)
 
     if(WARNINGS_AS_ERRORS)
         set(CLANG_WARNINGS ${CLANG_WARNINGS} -Werror)
         set(MSVC_WARNINGS ${MSVC_WARNINGS} /WX)
     endif()
 
-    set(
-        GCC_WARNINGS
+    set(GCC_WARNINGS
         ${CLANG_WARNINGS}
         -Wmisleading-indentation
         -Wduplicated-cond
         -Wduplicated-branches
         -Wlogical-op
-        -Wuseless-cast
-    )
+        -Wuseless-cast)
 
     if(MSVC)
         set(PROJECT_WARNINGS ${MSVC_WARNINGS})

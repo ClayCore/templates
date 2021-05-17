@@ -5,8 +5,7 @@ find_path(
     NAMES glm.hpp
     HINTS
     PATHS ${GLM_SEARCH_PATHS}
-    PATH_SUFFIXES include
-)
+    PATH_SUFFIXES include)
 
 set(GLM_FOUND "NO")
 if(GLM_HEADERS)

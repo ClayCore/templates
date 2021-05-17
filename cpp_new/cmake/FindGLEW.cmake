@@ -5,17 +5,18 @@ find_path(
     NAMES GL/glew.h
     HINTS
     PATHS ${GLEW_SEARCH_PATHS}
-    PATH_SUFFIXES include
-)
+    PATH_SUFFIXES include)
 
 # TODO: Separate out all the libraries.
 find_library(
     GLEW_LIBRARIES
-    NAMES libGLEW.a glew glew32s.lib glew32sd.lib
+    NAMES libGLEW.a
+          glew
+          glew32s.lib
+          glew32sd.lib
     HINTS
     PATHS ${GLEW_SEARCH_PATHS}
-    PATH_SUFFIXES lib
-)
+    PATH_SUFFIXES lib)
 
 set(GLEW_FOUND "NO")
 if(GLEW_HEADERS AND GLEW_LIBRARIES)
