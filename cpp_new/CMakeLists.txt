@@ -106,11 +106,6 @@ find_package(GLM)
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 find_package(SDL2)
 
-# Include all directories
-include_directories(
-
-)
-
 # Gather all sources and headers
 file(
     GLOB_RECURSE
