@@ -72,14 +72,14 @@ if(ENABLE_PCH)
 endif()
 
 # Where to find libraries and source/header files
-set(ProjectSourceDirs ${CMAKE_SOURCE_DIR}/src CACHE PATH "Not Found")
-set(ProjectIncludeDirs ${CMAKE_SOURCE_DIR}/include CACHE PATH "Not Found")
+set(PROJECT_SOURCE_DIRS ${CMAKE_SOURCE_DIR}/src CACHE PATH "Not Found")
+set(PROJECT_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/include CACHE PATH "Not Found")
 set(ProjectDependencies ${CMAKE_SOURCE_DIR}/vendor CACHE PATH "Not Found")
 
 # NOTE: Turns out that SFML 2.5 recently remade its built system.
 # This means many variables used everywhere else dont exist anymore
 # and the entire CMake workflow relies on a single config file
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${DEPENDENCIES_PATH}/sfml/lib/cmake/SFML)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${ProjectDependencies}/sfml/lib/cmake/SFML)
 
 # Set default search paths for Linux
 set(
@@ -108,26 +108,25 @@ find_package(SDL2)
 
 # Include all directories
 include_directories(
-    ${OPENGL_HEADERS}
-    ${GLAD_HEADERS}
-    ${GLFW3_HEADERS}
-    ${GLM_HEADERS}
-    ${SDL2_HEADERS}
-    ${ProjectIncludeDirs}
+
 )
 
 # Gather all sources and headers
 file(
     GLOB_RECURSE
     SOURCES
-    ${ProjectSourceDirs}/*.cc ${ProjectSourceDirs}/*.cpp
-    ${ProjectIncludeDirs}/*.cc ${ProjectIncludeDirs}/*.cpp
+    ${PROJECT_SOURCE_DIRS}/*.cc ${PROJECT_SOURCE_DIRS}/*.cpp
+    ${PROJECT_INCLUDE_DIRS}/*.cc ${PROJECT_INCLUDE_DIRS}/*.cpp
+    ${PROJECT_SOURCE_DIRS}/*/*.cc ${PROJECT_SOURCE_DIRS}/*/*.cpp
+    ${PROJECT_INCLUDE_DIRS}/*/*.cc ${PROJECT_INCLUDE_DIRS}/*/*.cpp
 )
 file(
     GLOB_RECURSE
     HEADERS
-    ${ProjectSourceDirs}/*.hh ${ProjectSourceDirs}/*.hpp
-    ${ProjectIncludeDirs}/*.hh ${ProjectIncludeDirs}/*.hpp
+    ${PROJECT_SOURCE_DIRS}/*.hh ${PROJECT_SOURCE_DIRS}/*.hpp
+    ${PROJECT_INCLUDE_DIRS}/*.hh ${PROJECT_INCLUDE_DIRS}/*.hpp
+    ${PROJECT_SOURCE_DIRS}/*/*.hh ${PROJECT_SOURCE_DIRS}/*/*.hpp
+    ${PROJECT_INCLUDE_DIRS}/*/*.hh ${PROJECT_INCLUDE_DIRS}/*/*.hpp
 )
 
 # Exclude any vendor sources and headers from the build
@@ -135,10 +134,20 @@ list(FILTER SOURCES EXCLUDE REGEX ".*(vendor|target|build).*")
 list(FILTER HEADERS EXCLUDE REGEX ".*(vendor|target|build).*")
 
 # Prepare executable
-add_executable(${ProjectName} ${HEADERS} ${SOURCES} )
+add_executable(${ProjectName} ${SOURCES} ${HEADERS})
 
-# Add all the include directories
-target_include_directories(${ProjectName} SYSTEM PRIVATE ${ProjectIncludeDirs})
+# Add all the include directories and libraries
+target_include_directories(
+    ${ProjectName} 
+    PRIVATE ${PROJECT_INCLUDE_DIRS} 
+    PRIVATE ${OPENGL_HEADERS}
+    PRIVATE ${GLAD_HEADERS}
+    PRIVATE ${GLFW3_HEADERS}
+    PRIVATE ${GLM_HEADERS}
+    PRIVATE ${SDL2_HEADERS}
+    PRIVATE ${PROJECT_INCLUDE_DIRS}
+)
+
 target_link_libraries(
     ${ProjectName}
     PRIVATE project_options 
@@ -148,6 +157,6 @@ target_link_libraries(
     PRIVATE ${GLFW3_LIBRARIES}
     PRIVATE ${SDL2_LIBRARIES}
     sfml-audio sfml-network sfml-graphics sfml-window sfml-system
-    ${HEADERS} 
     ${SOURCES}
+    ${HEADERS} 
 )
