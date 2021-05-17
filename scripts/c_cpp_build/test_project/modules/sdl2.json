@@ -1,0 +1,17 @@
+{
+    "name": "SDL2",
+    "headers": {
+        "suffix": "include",
+        "names": "SDL2/SDL.h",
+        "search_paths": [
+            "${DEPENDENCIES_PATH}/sdl2"
+        ]
+    },
+    "libraries": {
+        "suffix": "lib",
+        "names": "libSDL2.a",
+        "search_paths": [
+            "${DEPENDENCIES_PATH}/sdl2"
+        ]
+    }
+}

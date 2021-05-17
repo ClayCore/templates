@@ -1,0 +1,24 @@
+{
+    "meta": {
+        "name": "testProject",
+        "author": "claymore <claymore@example.com>",
+        "version": "0.1.0",
+        "language": "cpp"
+    },
+    "config": {
+        "dependencies": ["./modules/", "./deps/"],
+        "output": {
+            "options": [
+                "-O3",
+                "-std=c++2a",
+                "-Wextra",
+                "-Wall",
+                "-Wpedantic"
+            ],
+            "target": "binary",
+            "destination": "./build"
+        },
+        "include": ["./src/", "./lib/"],
+        "exclude": ["./modules/", "./deps/", "./build/"]
+    }
+}
