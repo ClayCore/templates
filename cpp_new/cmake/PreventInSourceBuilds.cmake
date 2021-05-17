@@ -1,4 +1,5 @@
 # Prevent in-source builds
+# NOTE: vscode doesn't like this at all...
 # function(AssureOutOfSourceBuilds)
 #     get_filename_component(srcdir "${CMAKE_SOURCE_DIR}" REALPATH)
 #     get_filename_component(bindir "${CMAKE_SOURCE_DIR}" REALPATH)

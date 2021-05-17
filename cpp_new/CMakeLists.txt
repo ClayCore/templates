@@ -74,6 +74,8 @@ endif()
 # Where to find libraries and source/header files
 set(PROJECT_SOURCE_DIRS ${CMAKE_SOURCE_DIR}/src CACHE PATH "Not Found")
 set(PROJECT_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/include CACHE PATH "Not Found")
+
+# Dependencies
 set(ProjectDependencies ${CMAKE_SOURCE_DIR}/vendor CACHE PATH "Not Found")
 
 # NOTE: Turns out that SFML 2.5 recently remade its built system.
@@ -131,26 +133,32 @@ list(FILTER HEADERS EXCLUDE REGEX ".*(vendor|target|build).*")
 # Prepare executable
 add_executable(${ProjectName} ${SOURCES} ${HEADERS})
 
+# Debug information
+message(STATUS "Headers: '${HEADERS}'")
+message(STATUS "Sources: '${SOURCES}'")
+message(STATUS "IncludeDirs: '${PROJECT_INCLUDE_DIRS}'")
+message(STATUS "Warnings: '${project_warnings}'")
+message(STATUS "Options: '${project_options}'")
+
 # Add all the include directories and libraries
 target_include_directories(
-    ${ProjectName} 
-    PRIVATE ${PROJECT_INCLUDE_DIRS} 
-    PRIVATE ${OPENGL_HEADERS}
-    PRIVATE ${GLAD_HEADERS}
-    PRIVATE ${GLFW3_HEADERS}
-    PRIVATE ${GLM_HEADERS}
-    PRIVATE ${SDL2_HEADERS}
-    PRIVATE ${PROJECT_INCLUDE_DIRS}
+    ${ProjectName}
+    PUBLIC ${OPENGL_HEADERS}
+    ${GLAD_HEADERS}
+    ${GLFW3_HEADERS}
+    ${GLM_HEADERS}
+    ${SDL2_HEADERS}
+    ${PROJECT_INCLUDE_DIRS}
 )
 
 target_link_libraries(
     ${ProjectName}
-    PRIVATE project_options 
+    PUBLIC project_options 
     project_warnings
-    PRIVATE ${OPENGL_LIBRARIES}
-    PRIVATE ${GLAD_LIBRARIES}
-    PRIVATE ${GLFW3_LIBRARIES}
-    PRIVATE ${SDL2_LIBRARIES}
+    ${OPENGL_LIBRARIES}
+    ${GLAD_LIBRARIES}
+    ${GLFW3_LIBRARIES}
+    ${SDL2_LIBRARIES}
     sfml-audio sfml-network sfml-graphics sfml-window sfml-system
     ${SOURCES}
     ${HEADERS} 
